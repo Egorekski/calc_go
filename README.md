@@ -101,6 +101,8 @@ exit
 2024/12/07 11:48:43 aplication was successfully closed
 ```
 
+3. Write `exit` to exit the program
+
 ---
 
 ### Project Structure
