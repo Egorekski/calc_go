@@ -40,6 +40,7 @@ func New() *Application {
 // тут будем чиать введенную строку и после нажатия ENTER писать результат работы программы на экране
 // если пользователь ввел exit - то останаваливаем приложение
 func (a *Application) Run() error {
+	log.Println("Welcome to the CLI Calculator!")
 	for {
 		// читаем выражение для вычисления из командной строки
 		log.Println("input expression")
@@ -84,7 +85,7 @@ func CalcHandler(w http.ResponseWriter, r *http.Request) {
 		if errors.Is(err, calculation.ErrInvalidExpression) {
 			fmt.Fprintf(w, "err: %s", err.Error())
 		} else {
-			fmt.Fprintf(w, "unknown err")
+			fmt.Fprintf(w, "unknown error")
 		}
 
 	} else {

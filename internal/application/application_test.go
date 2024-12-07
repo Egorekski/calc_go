@@ -9,7 +9,6 @@ import (
 	"testing"
 )
 
-// TODO: write README.md file
 // TODO: Make tests for `application.go`
 func TestCalcHandler(t *testing.T) {
 	testRequestBody := []struct {
