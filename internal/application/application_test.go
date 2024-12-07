@@ -9,7 +9,6 @@ import (
 	"testing"
 )
 
-// TODO: Make tests for `application.go`
 func TestCalcHandler(t *testing.T) {
 	testSuccessRequestBody := []struct {
 		name           string
