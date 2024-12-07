@@ -11,7 +11,7 @@ import (
 
 // TODO: Make tests for `application.go`
 func TestCalcHandler(t *testing.T) {
-	testRequestBody := []struct {
+	testSuccessRequestBody := []struct {
 		name           string
 		expression     string
 		expectedResult float64
@@ -37,8 +37,8 @@ func TestCalcHandler(t *testing.T) {
 			expectedResult: 0.5,
 		},
 	}
-	for i := 0; i < len(testRequestBody); i++ {
-		expr := testRequestBody[i].expression
+	for i := 0; i < len(testSuccessRequestBody); i++ {
+		expr := testSuccessRequestBody[i].expression
 		requestBody := strings.NewReader(`{"expression":"` + expr + `"}`)
 		req, err := http.NewRequest("POST", "/calc", requestBody)
 		if err != nil {
@@ -53,8 +53,49 @@ func TestCalcHandler(t *testing.T) {
 		body, _ := io.ReadAll(resp.Body)
 
 		gotRes := strings.Split(string(body), " ")
-		if gotRes[1] != fmt.Sprintf("%f", testRequestBody[i].expectedResult) {
-			t.Errorf("expected %f, got %v", testRequestBody[i].expectedResult, string(body))
+		if gotRes[1] != fmt.Sprintf("%f", testSuccessRequestBody[i].expectedResult) {
+			t.Errorf("expected %f, got %v", testSuccessRequestBody[i].expectedResult, string(body))
+		}
+	}
+
+	testCasesFail := []struct {
+		name        string
+		expression  string
+		expectedErr string
+	}{
+		{
+			name:        "simple",
+			expression:  "1+1*",
+			expectedErr: "invalid expression\n",
+		},
+		{
+			name:        "wrong expression",
+			expression:  "((2+2-*(2",
+			expectedErr: "invalid expression\n",
+		},
+		{
+			name:        "empty",
+			expression:  "",
+			expectedErr: "empty expression\n",
+		},
+	}
+
+	for i := 0; i < len(testCasesFail); i++ {
+		expr := testCasesFail[i].expression
+		requestBody := strings.NewReader(`{"expression":"` + expr + `"}`)
+		req, err := http.NewRequest("POST", "/calc", requestBody)
+		if err != nil {
+			t.Fatal(err)
+		}
+		w := httptest.NewRecorder()
+		CalcHandler(w, req)
+		resp := w.Result()
+		defer resp.Body.Close()
+		body, _ := io.ReadAll(resp.Body)
+
+		gotRes := strings.Split(string(body), ": ")
+		if gotRes[1] != fmt.Sprintf("%v", testCasesFail[i].expectedErr) {
+			t.Errorf("expression \"%v\" is invalid, but result \"%v\" was obtained", testCasesFail[i].expression, gotRes[1])
 		}
 	}
 }

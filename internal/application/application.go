@@ -71,7 +71,6 @@ type Request struct {
 	Expression string `json:"expression"`
 }
 
-// TODO: make <400> and <500> code cases
 func CalcHandler(w http.ResponseWriter, r *http.Request) {
 	request := new(Request)
 	defer r.Body.Close()
@@ -84,6 +83,10 @@ func CalcHandler(w http.ResponseWriter, r *http.Request) {
 	result, err := calculation.Calc(request.Expression)
 	if err != nil {
 		if errors.Is(err, calculation.ErrInvalidExpression) {
+			http.Error(w, fmt.Sprintf("error: %v", err.Error()), http.StatusBadRequest)
+		} else if errors.Is(err, calculation.ErrEmptyExpression) {
+			http.Error(w, fmt.Sprintf("error: %v", err.Error()), http.StatusBadRequest)
+		} else if errors.Is(err, calculation.ErrDivisionByZero) {
 			http.Error(w, fmt.Sprintf("error: %v", err.Error()), http.StatusBadRequest)
 		} else {
 			http.Error(w, fmt.Sprintf("unknown error: %v", err.Error()), http.StatusInternalServerError)

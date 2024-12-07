@@ -28,6 +28,9 @@ func isSign(value rune) bool {
 }
 
 func Calc(expression string) (float64, error) {
+	if len(expression) == 0 {
+		return 0, ErrEmptyExpression
+	}
 	if len(expression) < 3 {
 		return 0, ErrInvalidExpression
 	}
