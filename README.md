@@ -53,7 +53,7 @@
 
    Uncomment `app.RunServer()` and comment `app.Run()` in `main.go` file.
 
-   The server will start on http://localhost:8080, or you can write your own port by writing it as env variable.
+   The server will start on http://localhost:8080/api/v1/calculate, or you can write your own port by writing it as env variable.
    Example:
     ```bash
     export PORT='your-port' && go run ./cmd/main.go 

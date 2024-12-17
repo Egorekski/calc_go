@@ -39,7 +39,7 @@ func TestCalcHandler(t *testing.T) {
 	for i := 0; i < len(testSuccessRequestBody); i++ {
 		expr := testSuccessRequestBody[i].expression
 		requestBody := strings.NewReader(`{"expression":"` + expr + `"}`)
-		req, err := http.NewRequest("POST", "/calc", requestBody)
+		req, err := http.NewRequest("POST", "/api/v1/calculate", requestBody)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -82,7 +82,7 @@ func TestCalcHandler(t *testing.T) {
 	for i := 0; i < len(testCasesFail); i++ {
 		expr := testCasesFail[i].expression
 		requestBody := strings.NewReader(`{"expression":"` + expr + `"}`)
-		req, err := http.NewRequest("POST", "/calc", requestBody)
+		req, err := http.NewRequest("POST", "/api/v1/calculate", requestBody)
 		if err != nil {
 			t.Fatal(err)
 		}

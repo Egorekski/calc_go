@@ -75,7 +75,7 @@ type Request struct {
 
 func CalcHandler(w http.ResponseWriter, r *http.Request) {
 	// 404 error
-	if r.URL.Path != "/" {
+	if r.URL.Path != "/api/v1/calculate" {
 		http.NotFound(w, r)
 		return
 	}
@@ -131,6 +131,6 @@ func CalcHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *Application) RunServer() error {
-	http.HandleFunc("/", CalcHandler)
+	http.HandleFunc("/api/v1/calculate", CalcHandler)
 	return http.ListenAndServe(":"+a.config.Addr, nil)
 }
