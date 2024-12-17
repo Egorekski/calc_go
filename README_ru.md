@@ -4,9 +4,9 @@
 
 ---
 
-## Документация
+## Перевод
 
-- en [English](README.en.md)
+- en [English](README.md)
 - ru [Русский](README_ru)
 
 ---
