@@ -112,13 +112,17 @@ func CalcHandler(w http.ResponseWriter, r *http.Request) {
 	result, err := calculation.Calc(request.Expression)
 	if err != nil {
 		if errors.Is(err, calculation.ErrInvalidExpression) {
-			http.Error(w, fmt.Sprintf("error: %v", err.Error()), http.StatusBadRequest)
+			http.Error(w, fmt.Sprintf("calculation error: %v", err.Error()), http.StatusBadRequest)
+			log.Printf("calculation error: %v", err.Error())
 		} else if errors.Is(err, calculation.ErrEmptyExpression) {
-			http.Error(w, fmt.Sprintf("error: %v", err.Error()), http.StatusBadRequest)
+			http.Error(w, fmt.Sprintf("calculation error: %v", err.Error()), http.StatusBadRequest)
+			log.Printf("calculation error: %v", err.Error())
 		} else if errors.Is(err, calculation.ErrDivisionByZero) {
-			http.Error(w, fmt.Sprintf("error: %v", err.Error()), http.StatusBadRequest)
+			http.Error(w, fmt.Sprintf("calculation error: %v", err.Error()), http.StatusBadRequest)
+			log.Printf("calculation error: %v", err.Error())
 		} else {
-			http.Error(w, fmt.Sprintf("unknown error: %v", err.Error()), http.StatusInternalServerError)
+			http.Error(w, fmt.Sprintf("unknown calculation error: %v", err.Error()), http.StatusInternalServerError)
+			log.Printf("unknown calculation error: %v", err.Error())
 		}
 		w.WriteHeader(http.StatusBadRequest)
 	} else {
