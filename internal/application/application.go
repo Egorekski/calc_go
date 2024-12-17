@@ -50,8 +50,10 @@ func (a *Application) Run() error {
 		if err != nil {
 			log.Println("failed to read expression from console")
 		}
+
 		// убираем пробелы, чтобы оставить только вычислемое выражение
 		text = strings.TrimSpace(text)
+
 		// выходим, если ввели команду "exit"
 		if text == "exit" {
 			log.Println("aplication was successfully closed")
@@ -72,11 +74,38 @@ type Request struct {
 }
 
 func CalcHandler(w http.ResponseWriter, r *http.Request) {
+	// 404 error
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
+
+	// 405 error
+	if r.Method != "POST" {
+		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
+		return
+	}
+
 	request := new(Request)
 	defer r.Body.Close()
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
+
+		// 422 error
+		if err.Error() == ErrUnmarshalBool ||
+			err.Error() == ErrUnmarshalNumber ||
+			err.Error() == ErrUnmarshalObject {
+			http.Error(w, http.StatusText(http.StatusUnprocessableEntity), http.StatusUnprocessableEntity)
+			return
+		}
+
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// 418 error
+	if request.Expression == "coffee" {
+		http.Error(w, http.StatusText(http.StatusTeapot), http.StatusTeapot)
 		return
 	}
 
