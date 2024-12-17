@@ -4,6 +4,13 @@
 
 ---
 
+### Translations
+
+- en [English](./README.md)
+- ru [Русский](./README_ru.md)
+
+---
+
 ## Features
 
 - Built with **Go**, ensuring high performance and simplicity.
@@ -44,10 +51,10 @@
 
 1. Start the server:
 
-    Uncomment `app.RunServer()` and comment `app.Run()` in `main.go` file.
+   Uncomment `app.RunServer()` and comment `app.Run()` in `main.go` file.
 
-    The server will start on http://localhost:8080, or you can write your own port by writing it as env variable.
-    Example:
+   The server will start on http://localhost:8080, or you can write your own port by writing it as env variable.
+   Example:
     ```bash
     export PORT='your-port' && go run ./cmd/main.go 
    ```
@@ -83,8 +90,8 @@ curl -X POST http://localhost:8080 \
 
 1. Run the application in CLI mode:
 
-    Uncomment `app.Run()` and comment `app.RunServer()` in `main.go` file.
-    Then run the application:
+   Uncomment `app.Run()` and comment `app.RunServer()` in `main.go` file.
+   Then run the application:
     ```bash
     go run ./cmd/main.go
     ```
@@ -127,8 +134,8 @@ calc_go/
 ### Future Plans
 
 - Add support for advanced mathematical operations (e.g., exponentiation, square root).
-- Implement logging for requests and results. 
-- Add Docker support for containerized deployment. 
+- Implement logging for requests and results.
+- Add Docker support for containerized deployment.
 - Extend CLI mode with additional interactive features.
 
 ---
@@ -137,10 +144,10 @@ calc_go/
 
 Contributions are welcome! If you’d like to contribute:
 
-1. Fork the repository. 
-2. Create a feature branch: `git checkout -b feature-name`. 
-3. Commit your changes: `git commit -m "Add new feature"`. 
-4. Push to the branch: `git push origin feature-name`. 
+1. Fork the repository.
+2. Create a feature branch: `git checkout -b feature-name`.
+3. Commit your changes: `git commit -m "Add new feature"`.
+4. Push to the branch: `git push origin feature-name`.
 5. Open a pull request.
 
 ---
